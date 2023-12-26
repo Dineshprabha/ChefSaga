@@ -1,5 +1,7 @@
 package com.dineshprabha.chefsaga.ui.activity
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -18,6 +20,7 @@ class FoodActivity : AppCompatActivity() {
     private lateinit var mealId : String
     private lateinit var mealName : String
     private lateinit var mealThumb : String
+    private lateinit var youTubeLink : String
     private lateinit var mealViewModel: MealViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,15 @@ class FoodActivity : AppCompatActivity() {
         setInformationInViews()
         mealViewModel.getMealDetail(mealId)
         observerMealDetailsLiveData()
+
+        onYoutubeImageClick()
+    }
+
+    private fun onYoutubeImageClick() {
+        binding.imgYouTube.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youTubeLink))
+            startActivity(intent)
+        }
     }
 
     private fun observerMealDetailsLiveData() {
@@ -40,6 +52,7 @@ class FoodActivity : AppCompatActivity() {
                 binding.tvCategory.text = "Categroy: ${meal!!.strCategory}"
                 binding.tvArea.text = "Area: ${meal.strArea}"
                 binding.tvDescription.text = meal.strInstructions
+                youTubeLink = meal.strYoutube
             }
 
         })
