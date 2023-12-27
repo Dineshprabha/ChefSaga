@@ -21,6 +21,7 @@ import com.dineshprabha.chefsaga.data.Meal
 import com.dineshprabha.chefsaga.databinding.FragmentHomeBinding
 import com.dineshprabha.chefsaga.ui.activity.CategoryMealsActivity
 import com.dineshprabha.chefsaga.ui.activity.FoodActivity
+import com.dineshprabha.chefsaga.ui.fragment.bottomsheet.MealBottomSheetFragment
 import com.dineshprabha.chefsaga.viewmodel.HomeViewModel
 
 
@@ -68,6 +69,16 @@ class HomeFragment : Fragment() {
         setUpCategoriesRv()
         onCategoriesItemClick()
 
+        onPopularItemLongClick()
+
+    }
+
+    private fun onPopularItemLongClick() {
+
+        popularItemAdapter.onLongItemClick = {meal ->
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(meal.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager, "Meal Info")
+        }
     }
 
     private fun onCategoriesItemClick() {

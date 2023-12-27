@@ -10,6 +10,7 @@ import com.dineshprabha.chefsaga.databinding.PopularItemsBinding
 
 class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick:((MealsByCategory) -> Unit)
+    lateinit var onLongItemClick:((MealsByCategory) -> Unit)
     private var mealList = ArrayList<MealsByCategory>()
 
     fun setMeals(mealList : ArrayList<MealsByCategory>){
@@ -29,6 +30,11 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
         Glide.with(holder.itemView).load(mealList[position].strMealThumb).into(holder.binding.imgPopularMealItem)
         holder.itemView.setOnClickListener {
             onItemClick.invoke(mealList[position])
+        }
+
+        holder.itemView.setOnLongClickListener {
+            onLongItemClick?.invoke(mealList[position])
+                true
         }
     }
 
