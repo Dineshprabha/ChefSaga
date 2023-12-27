@@ -4,14 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dineshprabha.chefsaga.data.Meal
 import com.dineshprabha.chefsaga.data.MealList
+import com.dineshprabha.chefsaga.database.MealDatabase
 import com.dineshprabha.chefsaga.retrofit.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MealViewModel : ViewModel() {
+class MealViewModel (val mealDatabase: MealDatabase): ViewModel() {
 
     private val mealDetailLiveDta = MutableLiveData<Meal>()
 
@@ -34,5 +37,17 @@ class MealViewModel : ViewModel() {
 
     fun observeMealDetailsLiveData():LiveData<Meal>{
         return mealDetailLiveDta
+    }
+
+    fun insertMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().upsert(meal)
+        }
+    }
+
+    fun deleteMeal(meal: Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().delete(meal)
+        }
     }
 }

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.dineshprabha.chefsaga.MainActivity
 import com.dineshprabha.chefsaga.adapters.CategoriesAdapter
 import com.dineshprabha.chefsaga.adapters.MostPopularAdapter
 import com.dineshprabha.chefsaga.data.Category
@@ -39,7 +40,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+//        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = (activity as MainActivity).viewModel
         popularItemAdapter = MostPopularAdapter()
         categoriesAdapter = CategoriesAdapter()
     }
@@ -127,13 +129,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObserver() {
-
-//        homeViewModel.observeRandomMealLiveData().observe(viewLifecycleOwner, object :Observer<Meal>{
-//            override fun onChanged(value: Meal) {
-//
-//            }
-//
-//        })
         homeViewModel.observeRandomMealLiveData().observe(viewLifecycleOwner
         ) { meal ->
             Glide.with(this@HomeFragment).load(meal.strMealThumb).into(binding.imageRandomMeal)
