@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.dineshprabha.chefsaga.MainActivity
+import com.dineshprabha.chefsaga.R
 import com.dineshprabha.chefsaga.adapters.CategoriesAdapter
 import com.dineshprabha.chefsaga.adapters.MostPopularAdapter
 import com.dineshprabha.chefsaga.data.Category
@@ -70,7 +72,14 @@ class HomeFragment : Fragment() {
         onCategoriesItemClick()
 
         onPopularItemLongClick()
+        onSearchIconClick()
 
+    }
+
+    private fun onSearchIconClick() {
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun onPopularItemLongClick() {
