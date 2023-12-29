@@ -1,5 +1,6 @@
 package com.dineshprabha.chefsaga.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.dineshprabha.chefsaga.MainActivity
 import com.dineshprabha.chefsaga.R
 import com.dineshprabha.chefsaga.adapters.FavoritesAdapter
 import com.dineshprabha.chefsaga.databinding.FragmentSearchBinding
+import com.dineshprabha.chefsaga.ui.activity.FoodActivity
 import com.dineshprabha.chefsaga.viewmodel.HomeViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -45,6 +47,7 @@ class SearchFragment : Fragment() {
         binding.imgSearchArrow.setOnClickListener { searchMeals() }
 
         onserveSearchMealsLiveData()
+        onPupularItemClick()
 
         var searchJob: Job? = null
         binding.edSearchBox.addTextChangedListener {searchQuery ->
@@ -53,6 +56,16 @@ class SearchFragment : Fragment() {
                 delay(500)
                 homeViewModel.searchMeal(searchQuery.toString())
             }
+        }
+    }
+
+    private fun onPupularItemClick() {
+        searchAdapter.onItemClick = { meal ->
+            val intent = Intent(activity, FoodActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            startActivity(intent)
         }
     }
 

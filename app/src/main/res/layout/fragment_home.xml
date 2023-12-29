@@ -65,9 +65,9 @@
                 android:id="@+id/random_meal_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_160sdp"
-                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_10sdp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,8 +78,7 @@
                     android:id="@+id/image_random_meal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:background="@color/accent" />
+                    android:scaleType="centerCrop" />
 
 
             </androidx.cardview.widget.CardView>

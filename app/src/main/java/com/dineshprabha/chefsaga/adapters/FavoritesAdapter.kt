@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.dineshprabha.chefsaga.data.Meal
+import com.dineshprabha.chefsaga.data.MealsByCategory
 import com.dineshprabha.chefsaga.databinding.MealItemBinding
 
 class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder>() {
+    lateinit var onItemClick:((Meal) -> Unit)
     inner class FavoriteViewHolder(val binding : MealItemBinding):ViewHolder(binding.root) {
     }
 
@@ -38,5 +40,8 @@ class FavoritesAdapter: RecyclerView.Adapter<FavoritesAdapter.FavoriteViewHolder
         val meal = differ.currentList[position]
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgMeal)
         holder.binding.mealName.text = meal.strMeal
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(meal)
+        }
     }
 }

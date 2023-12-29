@@ -1,5 +1,6 @@
 package com.dineshprabha.chefsaga.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.dineshprabha.chefsaga.R
 import com.dineshprabha.chefsaga.adapters.CategoriesAdapter
 import com.dineshprabha.chefsaga.adapters.MostPopularAdapter
 import com.dineshprabha.chefsaga.databinding.FragmentCategoriesBinding
+import com.dineshprabha.chefsaga.ui.activity.CategoryMealsActivity
 import com.dineshprabha.chefsaga.viewmodel.HomeViewModel
 
 
@@ -38,7 +40,16 @@ class CategoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prepareRecyclerView()
         observerCategoryLiveData()
+        onCategoriesItemClick()
 
+    }
+
+    private fun onCategoriesItemClick() {
+        categoriesAdapter.onItemClick = {category ->
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(HomeFragment.CATEGORY_NAME, category.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareRecyclerView() {

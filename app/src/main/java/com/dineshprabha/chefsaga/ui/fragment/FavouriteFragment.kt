@@ -1,5 +1,6 @@
 package com.dineshprabha.chefsaga.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.dineshprabha.chefsaga.MainActivity
 import com.dineshprabha.chefsaga.R
 import com.dineshprabha.chefsaga.adapters.FavoritesAdapter
 import com.dineshprabha.chefsaga.databinding.FragmentFavouriteBinding
+import com.dineshprabha.chefsaga.ui.activity.FoodActivity
 import com.dineshprabha.chefsaga.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -39,6 +41,7 @@ class FavouriteFragment : Fragment() {
 
         observeFavorites()
         prepareRecyclerView()
+        onPupularItemClick()
 
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -64,6 +67,16 @@ class FavouriteFragment : Fragment() {
         }
 
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rvFavorites)
+    }
+
+    private fun onPupularItemClick() {
+        favoritesAdapter.onItemClick = { meal ->
+            val intent = Intent(activity, FoodActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            startActivity(intent)
+        }
     }
 
     private fun prepareRecyclerView() {

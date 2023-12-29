@@ -1,5 +1,6 @@
 package com.dineshprabha.chefsaga.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,14 @@ class CategoryMealsActivity : AppCompatActivity() {
     lateinit var binding : ActivityCategoryMealsBinding
     lateinit var categoryMealViewModel: CategoryMealViewModel
     lateinit var categoryMealsAdapter: CategoryMealsAdapter
+
+    companion object{
+        const val CATEGORY_NAME = "chefsaga.categoryName"
+        const val CATEGORY_ID = "chefsaga.categoryId"
+        const val CATEGORY_THUMB = "chefsaga.categoryThumb"
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
@@ -25,6 +34,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         categoryMealViewModel = ViewModelProvider(this).get(CategoryMealViewModel::class.java)
         categoryMealsAdapter = CategoryMealsAdapter()
         prepareRecyclerView()
+        onCategoriesItemClick()
 
         categoryMealViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
 
@@ -34,6 +44,17 @@ class CategoryMealsActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun onCategoriesItemClick() {
+
+        categoryMealsAdapter.onItemClick = { meal ->
+            val intent = Intent(applicationContext, FoodActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            startActivity(intent)
+        }
     }
 
     private fun prepareRecyclerView() {

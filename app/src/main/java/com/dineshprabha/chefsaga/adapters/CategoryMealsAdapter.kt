@@ -10,6 +10,7 @@ import com.dineshprabha.chefsaga.databinding.MealItemBinding
 class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryMealViewHolder>() {
 
     private var mealsList = ArrayList<MealsByCategory>()
+    lateinit var onItemClick:((MealsByCategory) -> Unit)
 
     fun setMealsList(mealsList: List<MealsByCategory>){
         this.mealsList = mealsList as ArrayList<MealsByCategory>
@@ -32,6 +33,11 @@ class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryM
     override fun onBindViewHolder(holder: CategoryMealViewHolder, position: Int) {
         Glide.with(holder.itemView).load(mealsList[position].strMealThumb).into(holder.binding.imgMeal)
         holder.binding.mealName.text = mealsList[position].strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(mealsList[position])
+        }
+
     }
 
 
